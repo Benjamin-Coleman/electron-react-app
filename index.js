@@ -1,28 +1,35 @@
+// npm
+const path = require('path');
+const url = require('url');
 const electron = require('electron');
+
+// ours
+const startServer = require('./serve');
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const path = require('path');
-const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 function createWindow() {
+  // start webpack server
+  startServer()
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
   // and load the index.html of the app.
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file:',
-      slashes: true,
-    })
-  );
+  mainWindow.loadURL('http://localhost:3000/index.html');
+  //   url.format({
+  //     pathname: path.join(__dirname, 'index.html'),
+  //     protocol: 'file:',
+  //     slashes: true,
+  //   })
+  // );
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
